@@ -11,6 +11,3 @@ default_source :community
 
 # run_list: chef-client will run these recipes in the order specified.
 run_list "ipboard_proxy"
-
-# Specify a custom source for a single cookbook:
-cookbook "ipboard_proxy", path: "cookbooks/ipboard_proxy"

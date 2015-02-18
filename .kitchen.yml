@@ -1,12 +1,16 @@
 ---
 driver:
   name: vagrant
+  network:
+    - ["private_network", {ip: "192.168.42.42"}]
 
 provisioner:
   name: policyfile_zero
 
 platforms:
   - name: ubuntu-14.04
+    driver:
+      box: moto/bt-base
 
 suites:
   - name: default
