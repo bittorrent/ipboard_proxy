@@ -1,0 +1,105 @@
+{
+  "name": "ipboard_proxy",
+  "run_list": [
+    "recipe[ipboard_proxy::default]"
+  ],
+  "cookbook_locks": {
+    "ipboard_proxy": {
+      "version": "0.1.0",
+      "identifier": "dff08c7ca0cd810b674b29b1ee4a1c36e3a23344",
+      "dotted_decimal_identifier": "63033405983477121.3209797263552074.31022072869700",
+      "source": "cookbooks/ipboard_proxy",
+      "cache_key": null,
+      "scm_info": {
+        "scm": "git",
+        "remote": null,
+        "revision": "1801a25519b1899f7d7e30d22fc932107d3741c9",
+        "working_tree_clean": true,
+        "published": false,
+        "synchronized_remote_branches": [
+
+        ]
+      },
+      "source_options": {
+        "path": "cookbooks/ipboard_proxy"
+      }
+    },
+    "apache2": {
+      "version": "3.0.1",
+      "identifier": "561852cf12cb67c62145dcbb45f7ae3bdbfde2d3",
+      "dotted_decimal_identifier": "24233591937616743.55768629328430583.191572117152467",
+      "cache_key": "apache2-3.0.1-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io/api/v1/cookbooks/apache2/versions/3.0.1/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io/api/v1/cookbooks/apache2/versions/3.0.1/download",
+        "version": "3.0.1"
+      }
+    },
+    "iptables": {
+      "version": "0.14.1",
+      "identifier": "e37a46bacbb021178c308ee6e14f980ecabb2223",
+      "dotted_decimal_identifier": "64029263913529377.6628064648159567.167189298225699",
+      "cache_key": "iptables-0.14.1-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io/api/v1/cookbooks/iptables/versions/0.14.1/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io/api/v1/cookbooks/iptables/versions/0.14.1/download",
+        "version": "0.14.1"
+      }
+    },
+    "logrotate": {
+      "version": "1.8.0",
+      "identifier": "dff2782fcee265b840db6e673ede5fc0dc3911d5",
+      "dotted_decimal_identifier": "63035517818561125.51862706909036254.105281933087189",
+      "cache_key": "logrotate-1.8.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io/api/v1/cookbooks/logrotate/versions/1.8.0/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io/api/v1/cookbooks/logrotate/versions/1.8.0/download",
+        "version": "1.8.0"
+      }
+    }
+  },
+  "solution_dependencies": {
+    "Policyfile": [
+      [
+        "ipboard_proxy",
+        ">= 0.0.0"
+      ],
+      [
+        "apache2",
+        "= 3.0.1"
+      ],
+      [
+        "iptables",
+        "= 0.14.1"
+      ],
+      [
+        "logrotate",
+        "= 1.8.0"
+      ]
+    ],
+    "dependencies": {
+      "ipboard_proxy (0.1.0)": [
+        [
+          "apache2",
+          ">= 0.0.0"
+        ]
+      ],
+      "apache2 (3.0.1)": [
+        [
+          "iptables",
+          ">= 0.0.0"
+        ],
+        [
+          "logrotate",
+          ">= 0.0.0"
+        ]
+      ],
+      "iptables (0.14.1)": [
+
+      ],
+      "logrotate (1.8.0)": [
+
+      ]
+    }
+  }
+}
