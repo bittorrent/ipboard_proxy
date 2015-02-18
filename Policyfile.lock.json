@@ -6,15 +6,15 @@
   "cookbook_locks": {
     "ipboard_proxy": {
       "version": "0.1.0",
-      "identifier": "dff08c7ca0cd810b674b29b1ee4a1c36e3a23344",
-      "dotted_decimal_identifier": "63033405983477121.3209797263552074.31022072869700",
+      "identifier": "0a561969f4df646540b0938e1f2c57fabb85fc8a",
+      "dotted_decimal_identifier": "2909416918933348.28500099781762860.96734399560842",
       "source": "cookbooks/ipboard_proxy",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "1801a25519b1899f7d7e30d22fc932107d3741c9",
-        "working_tree_clean": true,
+        "revision": "da2c26b1d3b752ba6cc3882bf6bee06734c0995b",
+        "working_tree_clean": false,
         "published": false,
         "synchronized_remote_branches": [
 
@@ -78,12 +78,6 @@
       ]
     ],
     "dependencies": {
-      "ipboard_proxy (0.1.0)": [
-        [
-          "apache2",
-          ">= 0.0.0"
-        ]
-      ],
       "apache2 (3.0.1)": [
         [
           "iptables",
@@ -99,6 +93,12 @@
       ],
       "logrotate (1.8.0)": [
 
+      ],
+      "ipboard_proxy (0.1.0)": [
+        [
+          "apache2",
+          ">= 0.0.0"
+        ]
       ]
     }
   }
