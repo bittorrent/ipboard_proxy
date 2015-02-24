@@ -6,7 +6,7 @@
   SetOutputFilter INFLATE;proxy-html;DEFLATE
 
   RewriteEngine On
-  LogLevel info
+  LogLevel info proxy_html:trace3
 
   ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
   CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
@@ -19,7 +19,8 @@
     ProxyPassReverse /
     ProxyHTMLURLMap http://(.*)forum.bittorrent.com(.*) http://$1<%= @params[:server_name] %>$2 IRi
     ProxyHTMLURLMap https://(.*)forum.bittorrent.com(.*) https://$1<%= @params[:server_name] %>$2 IRi
-
+    ProxyHTMLURLMap url\(http://forum.bittorrent.com([^\)]*)\)  url(http://<%= @params[:server_name] %>$1) IRi
+    ProxyHTMLURLMap url\(https://forum.bittorrent.com([^\)]*)\)  url(https://<%= @params[:server_name] %>$1) IRi
     Require all granted
   </Location>
 
@@ -42,7 +43,7 @@
   SetOutputFilter INFLATE;proxy-html;DEFLATE
 
   RewriteEngine On
-  LogLevel info
+  LogLevel info proxy_html:trace3
 
   ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
   CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
@@ -55,6 +56,8 @@
     ProxyPassReverse /
     ProxyHTMLURLMap https://(.*)forum.bittorrent.com(.*) https://$1<%= @params[:server_name] %>$2 IRi
     ProxyHTMLURLMap http://(.*)forum.bittorrent.com(.*) http://$1<%= @params[:server_name] %>$2 IRi
+    ProxyHTMLURLMap url\(http://forum.bittorrent.com([^\)]*)\)  url(http://<%= @params[:server_name] %>$1) IRi
+    ProxyHTMLURLMap url\(https://forum.bittorrent.com([^\)]*)\)  url(https://<%= @params[:server_name] %>$1) IRi
     Require all granted
   </Location>
 
