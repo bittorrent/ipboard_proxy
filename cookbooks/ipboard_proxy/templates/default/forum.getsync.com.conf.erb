@@ -3,20 +3,59 @@
   <% if @params[:server_aliases] -%>
   ServerAlias <%= @params[:server_aliases].join " " %>
   <% end -%>
+  SetOutputFilter INFLATE;proxy-html;DEFLATE
 
   RewriteEngine On
-  <%- if node['apache']['version'] == '2.4' -%>
-  LogLevel info rewrite:trace1
-  <%- else -%>
   LogLevel info
-  RewriteLog <%= node['apache']['log_dir'] %>/<%= @application_name %>-rewrite.log
-  RewriteLogLevel 0
-  <%- end -%>
 
   ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
   CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
 
   ProxyPreserveHost On
-  ProxyPass / http://forums.bittorrent.com/
-  ProxyPassReverse / http://forums.bittorrent.com/
+
+  <Location />
+    ProxyPass http://forum.bittorrent.com/
+    ProxyHTMLEnable On
+    ProxyPassReverse /
+    ProxyHTMLURLMap http://(.*)forum.bittorrent.com(.*) http://$1<%= @params[:server_name] %>$2 IRi
+    ProxyHTMLURLMap https://(.*)forum.bittorrent.com(.*) https://$1<%= @params[:server_name] %>$2 IRi
+
+    Require all granted
+  </Location>
+
+</VirtualHost>
+
+<VirtualHost *:443>
+  SSLEngine On
+  SSLProxyEngine On
+  SSLProxyCheckPeerCN Off
+  SSLProxyCheckPeerName Off
+  SSLProxyCheckPeerExpire Off
+  SSLCertificateFile /etc/apache2/ssl/star_getsync_com.crt
+  SSLCertificateKeyFile /etc/apache2/ssl/star_getsync_com.key
+  SSLCACertificateFile /etc/apache2/ssl/gd_bundle-g2-g1.crt
+
+  ServerName <%= @params[:server_name] %>
+  <% if @params[:server_aliases] -%>
+  ServerAlias <%= @params[:server_aliases].join " " %>
+  <% end -%>
+  SetOutputFilter INFLATE;proxy-html;DEFLATE
+
+  RewriteEngine On
+  LogLevel info
+
+  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
+
+  ProxyPreserveHost On
+
+  <Location />
+    ProxyPass https://forum.bittorrent.com/
+    ProxyHTMLEnable On
+    ProxyPassReverse /
+    ProxyHTMLURLMap https://(.*)forum.bittorrent.com(.*) https://$1<%= @params[:server_name] %>$2 IRi
+    ProxyHTMLURLMap http://(.*)forum.bittorrent.com(.*) http://$1<%= @params[:server_name] %>$2 IRi
+    Require all granted
+  </Location>
+
 </VirtualHost>

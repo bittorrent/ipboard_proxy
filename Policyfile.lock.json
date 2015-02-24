@@ -6,14 +6,14 @@
   "cookbook_locks": {
     "ipboard_proxy": {
       "version": "0.1.0",
-      "identifier": "7024ec3af369fa28c892618e3530249f95d571a0",
-      "dotted_decimal_identifier": "31565794411506170.11479530095916336.40267832193440",
+      "identifier": "62d2b9730d587e9c529416870cfda6a1e7408659",
+      "dotted_decimal_identifier": "27816241658681470.44000892353449213.183214299711065",
       "source": "cookbooks/ipboard_proxy",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "23c0d299b75792734d4324a01fd9b09f26a33a35",
+        "revision": "dad2438a0d1fa731457e821725f6b413eeedcbb5",
         "working_tree_clean": false,
         "published": false,
         "synchronized_remote_branches": [
