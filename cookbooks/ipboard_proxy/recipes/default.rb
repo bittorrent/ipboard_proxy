@@ -6,7 +6,7 @@
 
 include_recipe "apache2"
 %w(proxy proxy_ajp ssl proxy_http rewrite deflate headers proxy_balancer
-	proxy_connect xml2enc).each do |apache_mod|
+	proxy_connect substitute xml2enc).each do |apache_mod|
 	include_recipe "apache2::mod_#{apache_mod}"
 end
 

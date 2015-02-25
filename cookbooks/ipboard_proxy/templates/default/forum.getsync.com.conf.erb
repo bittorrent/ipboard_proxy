@@ -1,12 +1,13 @@
+SetOutputFilter INFLATE;SUBSTITUTE;DEFLATE
+ServerName <%= @params[:server_name] %>
+
 <VirtualHost *:<%= @params[:server_port] || node['apache']['listen_ports'].first %>>
-  ServerName <%= @params[:server_name] %>
   <% if @params[:server_aliases] -%>
   ServerAlias <%= @params[:server_aliases].join " " %>
   <% end -%>
-  SetOutputFilter INFLATE;proxy-html;DEFLATE
 
   RewriteEngine On
-  LogLevel info proxy_html:trace3
+  LogLevel warn
 
   ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
   CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
@@ -15,18 +16,26 @@
 
   <Location />
     ProxyPass http://forum.bittorrent.com/
-    ProxyHTMLEnable On
     ProxyPassReverse /
-    ProxyHTMLURLMap http://(.*)forum.bittorrent.com(.*) http://$1<%= @params[:server_name] %>$2 IRi
-    ProxyHTMLURLMap https://(.*)forum.bittorrent.com(.*) https://$1<%= @params[:server_name] %>$2 IRi
-    ProxyHTMLURLMap url\(http://forum.bittorrent.com([^\)]*)\)  url(http://<%= @params[:server_name] %>$1) IRi
-    ProxyHTMLURLMap url\(https://forum.bittorrent.com([^\)]*)\)  url(https://<%= @params[:server_name] %>$1) IRi
+    Substitute s|forum.bittorrent.com|forum.getsync.com|i
     Require all granted
   </Location>
 
 </VirtualHost>
 
 <VirtualHost *:443>
+  <% if @params[:server_aliases] -%>
+  ServerAlias <%= @params[:server_aliases].join " " %>
+  <% end -%>
+
+  RewriteEngine On
+  LogLevel warn
+
+  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
+
+  ProxyPreserveHost On
+
   SSLEngine On
   SSLProxyEngine On
   SSLProxyCheckPeerCN Off
@@ -36,28 +45,10 @@
   SSLCertificateKeyFile /etc/apache2/ssl/star_getsync_com.key
   SSLCACertificateFile /etc/apache2/ssl/gd_bundle-g2-g1.crt
 
-  ServerName <%= @params[:server_name] %>
-  <% if @params[:server_aliases] -%>
-  ServerAlias <%= @params[:server_aliases].join " " %>
-  <% end -%>
-  SetOutputFilter INFLATE;proxy-html;DEFLATE
-
-  RewriteEngine On
-  LogLevel info proxy_html:trace3
-
-  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
-  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
-
-  ProxyPreserveHost On
-
   <Location />
     ProxyPass https://forum.bittorrent.com/
-    ProxyHTMLEnable On
     ProxyPassReverse /
-    ProxyHTMLURLMap https://(.*)forum.bittorrent.com(.*) https://$1<%= @params[:server_name] %>$2 IRi
-    ProxyHTMLURLMap http://(.*)forum.bittorrent.com(.*) http://$1<%= @params[:server_name] %>$2 IRi
-    ProxyHTMLURLMap url\(http://forum.bittorrent.com([^\)]*)\)  url(http://<%= @params[:server_name] %>$1) IRi
-    ProxyHTMLURLMap url\(https://forum.bittorrent.com([^\)]*)\)  url(https://<%= @params[:server_name] %>$1) IRi
+    Substitute s|forum.bittorrent.com|forum.getsync.com|i
     Require all granted
   </Location>
 
