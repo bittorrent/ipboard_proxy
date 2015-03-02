@@ -10,17 +10,29 @@ include_recipe "apache2"
 	include_recipe "apache2::mod_#{apache_mod}"
 end
 
-apache_module 'proxy_html' do
-	conf true
+ssl_info = Chef::EncryptedDataBagItem.load('webcerts', 'star_getsync_com')
+
+file '/etc/apache2/ssl/star_getsync_com.crt' do
+	content ssl_info['single_cert']
+	owner 'root'
+	group 'root'
+	mode 0600
+	sensitive true
 end
 
-%w(gd_bundle-g2-g1.crt star_getsync_com.crt star_getsync_com.key).each do |f|
-	cookbook_file f do
-		path "/etc/apache2/ssl/#{f}"
-		owner 'root'
-		group 'root'
-		mode 0600
-	end
+file '/etc/apache2/ssl/star_getsync_com.key' do
+	content ssl_info['key']
+	owner 'root'
+	group 'root'
+	mode 0600
+	sensitive true
+end
+
+cookbook_file 'gd_bundle-g2-g1.crt' do
+	path "/etc/apache2/ssl/gd_bundle-g2-g1.crt"
+	owner 'root'
+	group 'root'
+	mode 0600
 end
 
 web_app "forum.getsync.com" do

@@ -1,4 +1,4 @@
 # ipboard_proxy
 
-TODO: Enter the cookbook description here.
+This cookbook sets up a reverse proxy
 
